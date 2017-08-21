@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListViewHolder> {
-    private ArrayList<FoodListVM> foodList = null;
+    private ArrayList<FoodListVM> foodList = new ArrayList<FoodListVM>();
 
     public FoodListAdapter(RecyclerView recyclerView, ArrayList<FoodListVM> foodList) {
     }
@@ -43,7 +43,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListViewHolder> {
         holder.cardView2.setBackgroundResource(selectedFoodListVM.getFoodImageLink2());
         holder.txtFood3.setText(selectedFoodListVM.getFoodName3());
         holder.cardView3.setBackgroundResource(selectedFoodListVM.getFoodImageLink3());
-
     }
 
     @Override

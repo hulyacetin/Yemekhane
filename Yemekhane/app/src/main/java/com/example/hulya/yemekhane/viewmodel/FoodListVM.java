@@ -1,10 +1,12 @@
 package com.example.hulya.yemekhane.viewmodel;
 
+import java.util.ArrayList;
+
 /**
  * Created by hulya on 14.08.2017.
  */
 
-public class FoodListVM {
+public class FoodListVM extends ArrayList<FoodListVM> {
 
     private String foodType;
     private String foodName1;

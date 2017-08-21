@@ -19,6 +19,7 @@ public class FoodListViewHolder extends  RecyclerView.ViewHolder {
     public CardView cardView1 = null;
     public CardView cardView2 = null;
     public CardView cardView3 = null;
+
     public FoodListViewHolder(View itemView) {
         super(itemView);
         initView();
