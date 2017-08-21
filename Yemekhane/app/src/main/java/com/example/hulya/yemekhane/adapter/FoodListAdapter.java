@@ -18,10 +18,7 @@ import java.util.ArrayList;
  */
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListViewHolder> {
-    SwipeRefreshLayout swiper;
-    Context context;
-    private ArrayList<FoodListVM> foodList = null;
-
+    private ArrayList<FoodListVM> foodList = new ArrayList<FoodListVM>();
 
     public FoodListAdapter(ArrayList<FoodListVM> foodList, SwipeRefreshLayout swiper, Context context) {
         this.foodList = foodList;
@@ -57,15 +54,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListViewHolder> {
         holder.txtFood3.setText(selectedFoodListVM.getFoodName3());
         holder.cardView3.setBackgroundResource(selectedFoodListVM.getFoodImageLink3());
 
-        swiper.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                foodList.clear();
-                notifyDataSetChanged();
-                refresh();
-            }
-        });
-    }
 
     @Override
     public int getItemCount() {
