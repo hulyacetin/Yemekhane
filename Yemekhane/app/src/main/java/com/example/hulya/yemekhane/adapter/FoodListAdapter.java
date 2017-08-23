@@ -39,14 +39,14 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListViewHolder> {
         holder.foodType.setText(selectedFoodListVM.getFoodType());
         holder.txtFood1.setText(selectedFoodListVM.getFoodName1());
         if (selectedFoodListVM.getFoodImageLink1() == -1) {
-            //       holder.cardView3.setBackgroundResource(selectedFoodListVM.getFoodImageLink3());
+            holder.cardView1.setVisibility(View.GONE);
         } else {
             holder.cardView1.setBackgroundResource(selectedFoodListVM.getFoodImageLink1());
         }
 
         holder.txtFood2.setText(selectedFoodListVM.getFoodName2());
         if (selectedFoodListVM.getFoodImageLink2() == -1) {
-            //       holder.cardView3.setBackgroundResource(selectedFoodListVM.getFoodImageLink3());
+            holder.cardView2.setVisibility(View.GONE);
         } else {
             holder.cardView2.setBackgroundResource(selectedFoodListVM.getFoodImageLink2());
         }
@@ -54,7 +54,7 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListViewHolder> {
         holder.txtFood3.setText(selectedFoodListVM.getFoodName3());
 
         if (selectedFoodListVM.getFoodImageLink3() == -1) {
-            //       holder.cardView3.setBackgroundResource(selectedFoodListVM.getFoodImageLink3());
+            holder.cardView3.setVisibility(View.GONE);
         } else {
             holder.cardView3.setBackgroundResource(selectedFoodListVM.getFoodImageLink3());
         }

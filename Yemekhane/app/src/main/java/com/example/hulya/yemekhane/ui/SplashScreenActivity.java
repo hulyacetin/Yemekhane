@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.example.hulya.yemekhane.R;
-import com.example.hulya.yemekhane.adapter.FoodListAdapter;
 import com.example.hulya.yemekhane.viewmodel.FoodListVM;
 import com.example.hulya.yemekhane.viewmodel.RecyclerViewComObj;
 import com.felipecsl.gifimageview.library.GifImageView;
@@ -26,14 +25,12 @@ import java.util.Map;
 public class SplashScreenActivity extends Activity {
 
     //variable defines
-    Map<String, ArrayList<FoodListVM>> map1 = new HashMap<>();
+    Map<String, ArrayList<FoodListVM>> mapFoodList = new HashMap<>();
     private ArrayList<FoodListVM> foodList = new ArrayList<>();
     private String child = "Day1";
     private int dayCount = 1;
     //component defines
     private GifImageView garfieldGif;
-    //adapter defines
-    private FoodListAdapter foodListAdapter;
     //firebase reference value defines
     private Firebase foodListRef;
 
@@ -60,7 +57,7 @@ public class SplashScreenActivity extends Activity {
         Intent intent = new Intent(SplashScreenActivity.this, RecyclerViewActivity.class);
 
         RecyclerViewComObj recyclerViewComObj = new RecyclerViewComObj();
-        recyclerViewComObj.setMapFoodList(map1);
+        recyclerViewComObj.setMapFoodList(mapFoodList);
 
         intent.putExtra("datas", recyclerViewComObj);
 
@@ -85,16 +82,44 @@ public class SplashScreenActivity extends Activity {
                 foodListVM.setFoodType("ÇORBALAR");
                 foodListVM.setFoodName1(dataSnapshot.child("Soup1").getValue().toString());
                 foodListVM.setFoodName2(dataSnapshot.child("Soup2").getValue().toString());
-                foodListVM.setFoodImageLink1(R.mipmap.nanelicorba);
-                foodListVM.setFoodImageLink2(R.mipmap.telsehriye2);
+                if (TextUtils.isEmpty(dataSnapshot.child("Soup1").getValue().toString())) {
+                    foodListVM.setFoodImageLink1(-1);
+                } else {
+                    foodListVM.setFoodImageLink1(R.mipmap.nanelicorba);
+                }
+
+                if (TextUtils.isEmpty(dataSnapshot.child("Soup2").getValue().toString())) {
+                    foodListVM.setFoodImageLink2(-1);
+                } else {
+                    foodListVM.setFoodImageLink2(R.mipmap.telsehriye2);
+                }
+
+                if (TextUtils.isEmpty(dataSnapshot.child("Soup3").getValue().toString())) {
+                    foodListVM.setFoodImageLink3(-1);
+                } else {
+                    // foodListVM.setFoodImageLink3(R.mipmap.bamya);
+                }
                 foodList.add(foodListVM);
 
                 foodListVM = new FoodListVM();
                 foodListVM.setFoodType("BAŞLANGIÇ");
                 foodListVM.setFoodName1(dataSnapshot.child("Entree1").getValue().toString());
                 foodListVM.setFoodName2(dataSnapshot.child("Entree2").getValue().toString());
-                foodListVM.setFoodImageLink1(R.mipmap.pilav2);
-                foodListVM.setFoodImageLink2(R.mipmap.soslumakarna);
+                if (TextUtils.isEmpty(dataSnapshot.child("Entree1").getValue().toString())) {
+                    foodListVM.setFoodImageLink1(-1);
+                } else {
+                    foodListVM.setFoodImageLink1(R.mipmap.pilav2);
+                }
+                if (TextUtils.isEmpty(dataSnapshot.child("Entree2").getValue().toString())) {
+                    foodListVM.setFoodImageLink2(-1);
+                } else {
+                    foodListVM.setFoodImageLink2(R.mipmap.soslumakarna);
+                }
+                if (TextUtils.isEmpty(dataSnapshot.child("Entree3").getValue().toString())) {
+                    foodListVM.setFoodImageLink3(-1);
+                } else {
+                    //foodListVM.setFoodImageLink3(R.mipmap.bamya);
+                }
                 foodList.add(foodListVM);
 
                 foodListVM = new FoodListVM();
@@ -102,8 +127,18 @@ public class SplashScreenActivity extends Activity {
                 foodListVM.setFoodName1(dataSnapshot.child("MainFood1").getValue().toString());
                 foodListVM.setFoodName2(dataSnapshot.child("MainFood2").getValue().toString());
                 foodListVM.setFoodName3(dataSnapshot.child("MainFood3").getValue().toString());
-                foodListVM.setFoodImageLink1(R.mipmap.soslukofte);
-                foodListVM.setFoodImageLink2(R.mipmap.fajita);
+                if (TextUtils.isEmpty(dataSnapshot.child("MainFood1").getValue().toString())) {
+                    foodListVM.setFoodImageLink1(-1);
+                } else {
+                    foodListVM.setFoodImageLink1(R.mipmap.soslukofte);
+                }
+
+                if (TextUtils.isEmpty(dataSnapshot.child("MainFood2").getValue().toString())) {
+                    foodListVM.setFoodImageLink2(-1);
+                } else {
+                    foodListVM.setFoodImageLink2(R.mipmap.fajita);
+                }
+
 
                 if (TextUtils.isEmpty(dataSnapshot.child("MainFood3").getValue().toString())) {
                     foodListVM.setFoodImageLink3(-1);
@@ -135,7 +170,7 @@ public class SplashScreenActivity extends Activity {
                 }
                 foodList.add(foodListVM);
 
-                map1.put(child, foodList);
+                mapFoodList.put(child, foodList);
 
                 dayCount++;
 
@@ -144,7 +179,6 @@ public class SplashScreenActivity extends Activity {
                     child = "Day" + dayCount;
                     getData();
                 } else {
-
                     sendDataToRecyclerViewActivity();
                 }
             }

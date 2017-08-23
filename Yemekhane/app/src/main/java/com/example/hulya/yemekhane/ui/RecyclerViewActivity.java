@@ -10,6 +10,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,7 +21,10 @@ import com.example.hulya.yemekhane.R;
 import com.example.hulya.yemekhane.adapter.FoodListAdapter;
 import com.example.hulya.yemekhane.viewmodel.FoodListVM;
 import com.example.hulya.yemekhane.viewmodel.RecyclerViewComObj;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -39,18 +43,17 @@ import java.util.Map;
 public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     SwipeRefreshLayout swiper;
-
-
-    //variables define
-    Map<String, ArrayList<FoodListVM>> map1 = new HashMap<>();
     //adapter defines
     FoodListAdapter foodListAdapter;
-    private ArrayList<FoodListVM> foodList ;
-    private ArrayList<String> dates_spinner=new ArrayList<>();
-    private String day;
-    private int i=1;
+    private ArrayAdapter<String> spAdapter;
+    //variables define
+    private Map<String, ArrayList<FoodListVM>> mapFoodList = new HashMap<>();
+    private ArrayList<FoodListVM> foodList;
+    private int selectedItemPosition = 1;
     private int spinner_position = 0;
+    private int dayCount = 1;
     private String default_date;
+    private String child = "Day1";
     //component defines
     private Toolbar toolbar;
     private RecyclerView rFoodList = null;
@@ -59,7 +62,8 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
     private LinearLayoutManager mLayoutManager;
     //remote client define
     private Firebase foodListRef;
-    private ArrayAdapter<String> spAdapter;
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +80,7 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
 
         RecyclerViewComObj recyclerViewComObj = getIntent().getParcelableExtra("datas");
 
-        map1 = recyclerViewComObj.getMapFoodList();
+        mapFoodList = recyclerViewComObj.getMapFoodList();
 
         getDateTime();
 
@@ -84,7 +88,7 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
 
-                foodListAdapter = new FoodListAdapter(map1.get("Day" + (position + 1)));
+                foodListAdapter = new FoodListAdapter(mapFoodList.get("Day" + (position + 1)));
                 rFoodList.setAdapter(foodListAdapter);
             }
 
@@ -102,7 +106,7 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
         rFoodList.setLayoutManager(mLayoutManager);
         rFoodList.setItemAnimator(new DefaultItemAnimator());
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        spinner= (Spinner) findViewById(R.id.spinner);
+        spinner = (Spinner) findViewById(R.id.spinner);
         swiper = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
     }
 
@@ -122,7 +126,6 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
         spAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, days);
         spinner.setAdapter(spAdapter);
 
-        i++;
         Date date1 = new Date();
         DateFormat format1 = new SimpleDateFormat("dd.MM.yyyy");
         default_date = format1.format(date1).toString();
@@ -139,11 +142,133 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
 
     @Override
     public void onRefresh() {
+        foodListRef = new Firebase("https://fooddata-e0a85.firebaseio.com/");
+        selectedItemPosition = spinner.getSelectedItemPosition();
+        dayCount = 1;
+        getData();
+    }
 
-        //foodlisti çekme requesti atilacak
-        // refreshing false kodu da cevabın geldigi yere tassınacak.
-        // ve adapter guncellenecek.
-        swiper.setRefreshing(false);
+    public void getData() {
+
+        foodListRef.child(child).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                FoodListVM foodListVM = new FoodListVM();
+                foodList = new ArrayList<>();
+
+                foodListVM.setFoodType("ÇORBALAR");
+                foodListVM.setFoodName1(dataSnapshot.child("Soup1").getValue().toString());
+                foodListVM.setFoodName2(dataSnapshot.child("Soup2").getValue().toString());
+                if (TextUtils.isEmpty(dataSnapshot.child("Soup1").getValue().toString())) {
+                    foodListVM.setFoodImageLink1(-1);
+                } else {
+                    foodListVM.setFoodImageLink1(R.mipmap.nanelicorba);
+                }
+
+                if (TextUtils.isEmpty(dataSnapshot.child("Soup2").getValue().toString())) {
+                    foodListVM.setFoodImageLink2(-1);
+                } else {
+                    foodListVM.setFoodImageLink2(R.mipmap.telsehriye2);
+                }
+
+                if (TextUtils.isEmpty(dataSnapshot.child("Soup3").getValue().toString())) {
+                    foodListVM.setFoodImageLink3(-1);
+                } else {
+                    // foodListVM.setFoodImageLink3(R.mipmap.bamya);
+                }
+
+                foodList.add(foodListVM);
+
+                foodListVM = new FoodListVM();
+                foodListVM.setFoodType("BAŞLANGIÇ");
+                foodListVM.setFoodName1(dataSnapshot.child("Entree1").getValue().toString());
+                foodListVM.setFoodName2(dataSnapshot.child("Entree2").getValue().toString());
+                if (TextUtils.isEmpty(dataSnapshot.child("Entree1").getValue().toString())) {
+                    foodListVM.setFoodImageLink1(-1);
+                } else {
+                    foodListVM.setFoodImageLink1(R.mipmap.pilav2);
+                }
+                if (TextUtils.isEmpty(dataSnapshot.child("Entree2").getValue().toString())) {
+                    foodListVM.setFoodImageLink2(-1);
+                } else {
+                    foodListVM.setFoodImageLink2(R.mipmap.soslumakarna);
+                }
+                if (TextUtils.isEmpty(dataSnapshot.child("Entree3").getValue().toString())) {
+                    foodListVM.setFoodImageLink3(-1);
+                } else {
+                    //foodListVM.setFoodImageLink3(R.mipmap.bamya);
+                }
+
+                foodList.add(foodListVM);
+
+                foodListVM = new FoodListVM();
+                foodListVM.setFoodType("ANA YEMEK");
+                foodListVM.setFoodName1(dataSnapshot.child("MainFood1").getValue().toString());
+                foodListVM.setFoodName2(dataSnapshot.child("MainFood2").getValue().toString());
+                foodListVM.setFoodName3(dataSnapshot.child("MainFood3").getValue().toString());
+                if (TextUtils.isEmpty(dataSnapshot.child("MainFood1").getValue().toString())) {
+                    foodListVM.setFoodImageLink1(-1);
+                } else {
+                    foodListVM.setFoodImageLink1(R.mipmap.soslukofte);
+                }
+
+                if (TextUtils.isEmpty(dataSnapshot.child("MainFood2").getValue().toString())) {
+                    foodListVM.setFoodImageLink2(-1);
+                } else {
+                    foodListVM.setFoodImageLink2(R.mipmap.fajita);
+                }
+
+
+                if (TextUtils.isEmpty(dataSnapshot.child("MainFood3").getValue().toString())) {
+                    foodListVM.setFoodImageLink3(-1);
+                } else {
+                    foodListVM.setFoodImageLink3(R.mipmap.bamya);
+                }
+                foodList.add(foodListVM);
+
+                foodListVM = new FoodListVM();
+                foodListVM.setFoodType("ALTERNATİF");
+                foodListVM.setFoodName1(dataSnapshot.child("Alternatif1").getValue().toString());
+                foodListVM.setFoodName2(dataSnapshot.child("Alternatif2").getValue().toString());
+                foodListVM.setFoodName3(dataSnapshot.child("Alternatif3").getValue().toString());
+                if (TextUtils.isEmpty(dataSnapshot.child("Alternatif1").getValue().toString())) {
+                    foodListVM.setFoodImageLink1(-1);
+                } else {
+                    foodListVM.setFoodImageLink1(R.mipmap.kumru);
+                }
+                if (TextUtils.isEmpty(dataSnapshot.child("Alternatif2").getValue().toString())) {
+                    foodListVM.setFoodImageLink2(-1);
+                } else {
+                    foodListVM.setFoodImageLink2(R.mipmap.ayran);
+                }
+                if (TextUtils.isEmpty(dataSnapshot.child("Alternatif3").getValue().toString())) {
+                    foodListVM.setFoodImageLink3(-1);
+                } else {
+                    foodListVM.setFoodImageLink3(R.mipmap.specialsalata);
+                }
+                foodList.add(foodListVM);
+
+                mapFoodList.put(child, foodList);
+//                child = "Day" + (selectedItemPosition + 1);
+
+                dayCount++;
+
+                if (dayCount < 8) {
+                    child = "Day" + dayCount;
+                    getData();
+                } else {
+                    foodListAdapter = new FoodListAdapter(mapFoodList.get("Day" + (selectedItemPosition + 1)));
+                    rFoodList.setAdapter(foodListAdapter);
+                    swiper.setRefreshing(false);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 }
 

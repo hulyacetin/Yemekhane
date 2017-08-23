@@ -8,4 +8,5 @@
     <color name="toolbar_icon">#fe4545</color>
     <color name="toolbar_title">#57e1d5</color>
     <color name="splash_screen">#f8f7db</color>
+    <color name="spinner_border_color">#000</color>
 </resources>
