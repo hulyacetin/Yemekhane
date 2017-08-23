@@ -38,11 +38,27 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListViewHolder> {
         FoodListVM selectedFoodListVM = getItem(position);
         holder.foodType.setText(selectedFoodListVM.getFoodType());
         holder.txtFood1.setText(selectedFoodListVM.getFoodName1());
-        holder.cardView1.setBackgroundResource(selectedFoodListVM.getFoodImageLink1());
+        if (selectedFoodListVM.getFoodImageLink1() == -1) {
+            //       holder.cardView3.setBackgroundResource(selectedFoodListVM.getFoodImageLink3());
+        } else {
+            holder.cardView1.setBackgroundResource(selectedFoodListVM.getFoodImageLink1());
+        }
+
         holder.txtFood2.setText(selectedFoodListVM.getFoodName2());
-        holder.cardView2.setBackgroundResource(selectedFoodListVM.getFoodImageLink2());
+        if (selectedFoodListVM.getFoodImageLink2() == -1) {
+            //       holder.cardView3.setBackgroundResource(selectedFoodListVM.getFoodImageLink3());
+        } else {
+            holder.cardView2.setBackgroundResource(selectedFoodListVM.getFoodImageLink2());
+        }
+
         holder.txtFood3.setText(selectedFoodListVM.getFoodName3());
-        holder.cardView3.setBackgroundResource(selectedFoodListVM.getFoodImageLink3());
+
+        if (selectedFoodListVM.getFoodImageLink3() == -1) {
+            //       holder.cardView3.setBackgroundResource(selectedFoodListVM.getFoodImageLink3());
+        } else {
+            holder.cardView3.setBackgroundResource(selectedFoodListVM.getFoodImageLink3());
+        }
+
     }
 
     @Override

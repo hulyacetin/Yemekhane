@@ -1,12 +1,12 @@
 package com.example.hulya.yemekhane.viewmodel;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * Created by hulya on 14.08.2017.
  */
 
-public class FoodListVM extends ArrayList<FoodListVM> {
+public class FoodListVM implements Serializable {
 
     private String foodType;
     private String foodName1;
@@ -16,6 +16,9 @@ public class FoodListVM extends ArrayList<FoodListVM> {
     private int foodImageLink2;
     private int foodImageLink3;
 
+    public FoodListVM() {
+
+    }
     public String getFoodType() {
         return foodType;
     }
@@ -27,7 +30,6 @@ public class FoodListVM extends ArrayList<FoodListVM> {
     public String getFoodName1() {
         return foodName1;
     }
-
 
     public void setFoodName1(String foodName1) {
         this.foodName1 = foodName1;
@@ -72,5 +74,4 @@ public class FoodListVM extends ArrayList<FoodListVM> {
     public void setFoodImageLink3(int foodImageLink3) {
         this.foodImageLink3 = foodImageLink3;
     }
-
 }
