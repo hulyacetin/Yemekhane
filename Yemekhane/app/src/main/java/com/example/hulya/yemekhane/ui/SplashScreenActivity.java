@@ -168,8 +168,51 @@ public class SplashScreenActivity extends Activity {
                 } else {
                     foodListVM.setFoodImageLink3(R.mipmap.specialsalata);
                 }
+
+                foodList.add(foodListVM);
+                foodListVM = new FoodListVM();
+                foodListVM.setFoodType("ZY BÜFESİ");
+                foodListVM.setFoodName1(dataSnapshot.child("ZYBufe1").getValue().toString());
+                foodListVM.setFoodName2(dataSnapshot.child("ZYBufe2").getValue().toString());
+                foodListVM.setFoodName3(dataSnapshot.child("ZYBufe3").getValue().toString());
+                if (TextUtils.isEmpty(dataSnapshot.child("ZYBufe1").getValue().toString())) {
+                    foodListVM.setFoodImageLink1(-1);
+                } else {
+                    foodListVM.setFoodImageLink1(R.mipmap.kumru);
+                }
+                if (TextUtils.isEmpty(dataSnapshot.child("ZYBufe2").getValue().toString())) {
+                    foodListVM.setFoodImageLink2(-1);
+                } else {
+                    foodListVM.setFoodImageLink2(R.mipmap.ayran);
+                }
+                if (TextUtils.isEmpty(dataSnapshot.child("ZYBufe3").getValue().toString())) {
+                    foodListVM.setFoodImageLink3(-1);
+                } else {
+                    foodListVM.setFoodImageLink3(R.mipmap.specialsalata);
+                }
                 foodList.add(foodListVM);
 
+                foodListVM = new FoodListVM();
+                foodListVM.setFoodType("TATLI BÜFESİ");
+                foodListVM.setFoodName1(dataSnapshot.child("Desert1").getValue().toString());
+                foodListVM.setFoodName2(dataSnapshot.child("Desert2").getValue().toString());
+                foodListVM.setFoodName3(dataSnapshot.child("Desert3").getValue().toString());
+                if (TextUtils.isEmpty(dataSnapshot.child("Desert1").getValue().toString())) {
+                    foodListVM.setFoodImageLink1(-1);
+                } else {
+                    foodListVM.setFoodImageLink1(R.mipmap.kumru);
+                }
+                if (TextUtils.isEmpty(dataSnapshot.child("Desert2").getValue().toString())) {
+                    foodListVM.setFoodImageLink2(-1);
+                } else {
+                    foodListVM.setFoodImageLink2(R.mipmap.ayran);
+                }
+                if (TextUtils.isEmpty(dataSnapshot.child("Desert3").getValue().toString())) {
+                    foodListVM.setFoodImageLink3(-1);
+                } else {
+                    foodListVM.setFoodImageLink3(R.mipmap.specialsalata);
+                }
+                foodList.add(foodListVM);
                 mapFoodList.put(child, foodList);
 
                 dayCount++;
