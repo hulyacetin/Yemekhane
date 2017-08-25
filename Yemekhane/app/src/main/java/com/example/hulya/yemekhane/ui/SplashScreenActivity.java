@@ -4,8 +4,15 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.widget.ImageView;
 
+import com.android.volley.Cache;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.NetworkImageView;
 import com.example.hulya.yemekhane.R;
+import com.example.hulya.yemekhane.controller.AppController;
 import com.example.hulya.yemekhane.viewmodel.FoodListVM;
 import com.example.hulya.yemekhane.viewmodel.RecyclerViewComObj;
 import com.felipecsl.gifimageview.library.GifImageView;
@@ -18,9 +25,12 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.felipecsl.gifimageview.library.GifHeaderParser.TAG;
 
 public class SplashScreenActivity extends Activity {
 
@@ -30,10 +40,11 @@ public class SplashScreenActivity extends Activity {
     private String child = "Day1";
     private int dayCount = 1;
     //component defines
+    private NetworkImageView imgNetWorkView;
     private GifImageView garfieldGif;
     //firebase reference value defines
     private Firebase foodListRef;
-
+    private ImageView imageview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,21 +94,21 @@ public class SplashScreenActivity extends Activity {
                 foodListVM.setFoodName1(dataSnapshot.child("Soup1").getValue().toString());
                 foodListVM.setFoodName2(dataSnapshot.child("Soup2").getValue().toString());
                 if (TextUtils.isEmpty(dataSnapshot.child("Soup1").getValue().toString())) {
-                    foodListVM.setFoodImageLink1(-1);
+                    foodListVM.setFoodNetworkImageLink1(null);
                 } else {
-                    foodListVM.setFoodImageLink1(R.mipmap.nanelicorba);
+                    foodListVM.setFoodNetworkImageLink1(dataSnapshot.child("SoupImage1").getValue().toString());
                 }
 
                 if (TextUtils.isEmpty(dataSnapshot.child("Soup2").getValue().toString())) {
-                    foodListVM.setFoodImageLink2(-1);
+                    foodListVM.setFoodNetworkImageLink2(null);
                 } else {
-                    foodListVM.setFoodImageLink2(R.mipmap.telsehriye2);
+                    foodListVM.setFoodNetworkImageLink2(dataSnapshot.child("SoupImage2").getValue().toString());
                 }
 
                 if (TextUtils.isEmpty(dataSnapshot.child("Soup3").getValue().toString())) {
-                    foodListVM.setFoodImageLink3(-1);
+                    foodListVM.setFoodNetworkImageLink3(null);
                 } else {
-                    // foodListVM.setFoodImageLink3(R.mipmap.bamya);
+                    foodListVM.setFoodNetworkImageLink3(dataSnapshot.child("SoupImage3").getValue().toString());
                 }
                 foodList.add(foodListVM);
 
@@ -106,19 +117,19 @@ public class SplashScreenActivity extends Activity {
                 foodListVM.setFoodName1(dataSnapshot.child("Entree1").getValue().toString());
                 foodListVM.setFoodName2(dataSnapshot.child("Entree2").getValue().toString());
                 if (TextUtils.isEmpty(dataSnapshot.child("Entree1").getValue().toString())) {
-                    foodListVM.setFoodImageLink1(-1);
+                    foodListVM.setFoodNetworkImageLink1(null);
                 } else {
-                    foodListVM.setFoodImageLink1(R.mipmap.pilav2);
+                    foodListVM.setFoodNetworkImageLink1(dataSnapshot.child("EntreeImage1").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("Entree2").getValue().toString())) {
-                    foodListVM.setFoodImageLink2(-1);
+                    foodListVM.setFoodNetworkImageLink2(null);
                 } else {
-                    foodListVM.setFoodImageLink2(R.mipmap.soslumakarna);
+                    foodListVM.setFoodNetworkImageLink2(dataSnapshot.child("EntreeImage2").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("Entree3").getValue().toString())) {
-                    foodListVM.setFoodImageLink3(-1);
+                    foodListVM.setFoodNetworkImageLink3(null);
                 } else {
-                    //foodListVM.setFoodImageLink3(R.mipmap.bamya);
+                    foodListVM.setFoodNetworkImageLink3(dataSnapshot.child("EntreeImage3").getValue().toString());
                 }
                 foodList.add(foodListVM);
 
@@ -128,22 +139,22 @@ public class SplashScreenActivity extends Activity {
                 foodListVM.setFoodName2(dataSnapshot.child("MainFood2").getValue().toString());
                 foodListVM.setFoodName3(dataSnapshot.child("MainFood3").getValue().toString());
                 if (TextUtils.isEmpty(dataSnapshot.child("MainFood1").getValue().toString())) {
-                    foodListVM.setFoodImageLink1(-1);
+                    foodListVM.setFoodNetworkImageLink1(null);
                 } else {
-                    foodListVM.setFoodImageLink1(R.mipmap.soslukofte);
+                    foodListVM.setFoodNetworkImageLink1(dataSnapshot.child("MainFoodImage1").getValue().toString());
                 }
 
                 if (TextUtils.isEmpty(dataSnapshot.child("MainFood2").getValue().toString())) {
-                    foodListVM.setFoodImageLink2(-1);
+                    foodListVM.setFoodNetworkImageLink2(null);
                 } else {
-                    foodListVM.setFoodImageLink2(R.mipmap.fajita);
+                    foodListVM.setFoodNetworkImageLink2(dataSnapshot.child("MainFoodImage2").getValue().toString());
                 }
 
 
                 if (TextUtils.isEmpty(dataSnapshot.child("MainFood3").getValue().toString())) {
-                    foodListVM.setFoodImageLink3(-1);
+                    foodListVM.setFoodNetworkImageLink3(null);
                 } else {
-                    foodListVM.setFoodImageLink3(R.mipmap.bamya);
+                    foodListVM.setFoodNetworkImageLink3(dataSnapshot.child("MainFoodImage3").getValue().toString());
                 }
 
                 foodList.add(foodListVM);
@@ -154,19 +165,19 @@ public class SplashScreenActivity extends Activity {
                 foodListVM.setFoodName2(dataSnapshot.child("Alternatif2").getValue().toString());
                 foodListVM.setFoodName3(dataSnapshot.child("Alternatif3").getValue().toString());
                 if (TextUtils.isEmpty(dataSnapshot.child("Alternatif1").getValue().toString())) {
-                    foodListVM.setFoodImageLink1(-1);
+                    foodListVM.setFoodNetworkImageLink1(null);
                 } else {
-                    foodListVM.setFoodImageLink1(R.mipmap.kumru);
+                    foodListVM.setFoodNetworkImageLink1(dataSnapshot.child("AlternatifFoodImageLink1").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("Alternatif2").getValue().toString())) {
-                    foodListVM.setFoodImageLink2(-1);
+                    foodListVM.setFoodNetworkImageLink2(null);
                 } else {
-                    foodListVM.setFoodImageLink2(R.mipmap.ayran);
+                    foodListVM.setFoodNetworkImageLink2(dataSnapshot.child("AlternatifFoodImageLink2").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("Alternatif3").getValue().toString())) {
-                    foodListVM.setFoodImageLink3(-1);
+                    foodListVM.setFoodNetworkImageLink3(null);
                 } else {
-                    foodListVM.setFoodImageLink3(R.mipmap.specialsalata);
+                    foodListVM.setFoodNetworkImageLink3(dataSnapshot.child("AlternatifFoodImageLink3").getValue().toString());
                 }
 
                 foodList.add(foodListVM);
@@ -176,19 +187,19 @@ public class SplashScreenActivity extends Activity {
                 foodListVM.setFoodName2(dataSnapshot.child("ZYBufe2").getValue().toString());
                 foodListVM.setFoodName3(dataSnapshot.child("ZYBufe3").getValue().toString());
                 if (TextUtils.isEmpty(dataSnapshot.child("ZYBufe1").getValue().toString())) {
-                    foodListVM.setFoodImageLink1(-1);
+                    foodListVM.setFoodNetworkImageLink1(null);
                 } else {
-                    foodListVM.setFoodImageLink1(R.mipmap.kumru);
+                    foodListVM.setFoodNetworkImageLink1(dataSnapshot.child("ZYBufeImage1").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("ZYBufe2").getValue().toString())) {
-                    foodListVM.setFoodImageLink2(-1);
+                    foodListVM.setFoodNetworkImageLink2(null);
                 } else {
-                    foodListVM.setFoodImageLink2(R.mipmap.ayran);
+                    foodListVM.setFoodNetworkImageLink2(dataSnapshot.child("ZYBufeImage2").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("ZYBufe3").getValue().toString())) {
-                    foodListVM.setFoodImageLink3(-1);
+                    foodListVM.setFoodNetworkImageLink3(null);
                 } else {
-                    foodListVM.setFoodImageLink3(R.mipmap.specialsalata);
+                    foodListVM.setFoodNetworkImageLink3(dataSnapshot.child("ZYBufeImage3").getValue().toString());
                 }
                 foodList.add(foodListVM);
 
@@ -198,19 +209,19 @@ public class SplashScreenActivity extends Activity {
                 foodListVM.setFoodName2(dataSnapshot.child("Desert2").getValue().toString());
                 foodListVM.setFoodName3(dataSnapshot.child("Desert3").getValue().toString());
                 if (TextUtils.isEmpty(dataSnapshot.child("Desert1").getValue().toString())) {
-                    foodListVM.setFoodImageLink1(-1);
+                    foodListVM.setFoodNetworkImageLink1(null);
                 } else {
-                    foodListVM.setFoodImageLink1(R.mipmap.kumru);
+                    foodListVM.setFoodNetworkImageLink1(dataSnapshot.child("DesertImage1").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("Desert2").getValue().toString())) {
-                    foodListVM.setFoodImageLink2(-1);
+                    foodListVM.setFoodNetworkImageLink2(null);
                 } else {
-                    foodListVM.setFoodImageLink2(R.mipmap.ayran);
+                    foodListVM.setFoodNetworkImageLink2(dataSnapshot.child("DesertImage2").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("Desert3").getValue().toString())) {
-                    foodListVM.setFoodImageLink3(-1);
+                    foodListVM.setFoodNetworkImageLink3(null);
                 } else {
-                    foodListVM.setFoodImageLink3(R.mipmap.specialsalata);
+                    foodListVM.setFoodNetworkImageLink3(dataSnapshot.child("DesertImage3").getValue().toString());
                 }
                 foodList.add(foodListVM);
                 mapFoodList.put(child, foodList);
@@ -231,6 +242,48 @@ public class SplashScreenActivity extends Activity {
 
             }
         });
+    }
+
+    private void makeImageRequest(String imageURL) {
+        ImageLoader imageLoader = AppController.getInstance().getImageLoader();
+
+        // If you are using NetworkImageView
+        //imgNetWorkView.setImageUrl(imageURL, imageLoader);
+
+
+        // If you are using normal ImageView
+        imageLoader.get(imageURL, new ImageLoader.ImageListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, "Image Load Error: " + error.getMessage());
+            }
+
+            @Override
+            public void onResponse(ImageLoader.ImageContainer response, boolean arg1) {
+                if (response.getBitmap() != null) {
+                    // load image into imageview
+                    imageview.setImageBitmap(response.getBitmap());
+                }
+            }
+        });
+
+        // Loading image with placeholder and error image
+        imageLoader.get(imageURL, ImageLoader.getImageListener(imgNetWorkView, R.drawable.placeholder_rev, R.drawable.ico_error));
+
+        Cache cache = AppController.getInstance().getRequestQueue().getCache();
+        Cache.Entry entry = cache.get(imageURL);
+        if (entry != null) {
+            try {
+                String imageData = new String(entry.data, "UTF-8");
+                // handle data, like converting it to xml, json, bitmap etc.,
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // cached response doesn't exists. Make a network call here
+        }
+
     }
 }
 

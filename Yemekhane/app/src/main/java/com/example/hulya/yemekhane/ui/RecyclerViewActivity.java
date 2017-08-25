@@ -160,23 +160,22 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
                 foodListVM.setFoodName1(dataSnapshot.child("Soup1").getValue().toString());
                 foodListVM.setFoodName2(dataSnapshot.child("Soup2").getValue().toString());
                 if (TextUtils.isEmpty(dataSnapshot.child("Soup1").getValue().toString())) {
-                    foodListVM.setFoodImageLink1(-1);
+                    foodListVM.setFoodNetworkImageLink1(null);
                 } else {
-                    foodListVM.setFoodImageLink1(R.mipmap.nanelicorba);
+                    foodListVM.setFoodNetworkImageLink1(dataSnapshot.child("SoupImage1").getValue().toString());
                 }
 
                 if (TextUtils.isEmpty(dataSnapshot.child("Soup2").getValue().toString())) {
-                    foodListVM.setFoodImageLink2(-1);
+                    foodListVM.setFoodNetworkImageLink2(null);
                 } else {
-                    foodListVM.setFoodImageLink2(R.mipmap.telsehriye2);
+                    foodListVM.setFoodNetworkImageLink2(dataSnapshot.child("SoupImage2").getValue().toString());
                 }
 
                 if (TextUtils.isEmpty(dataSnapshot.child("Soup3").getValue().toString())) {
-                    foodListVM.setFoodImageLink3(-1);
+                    foodListVM.setFoodNetworkImageLink3(null);
                 } else {
-                    // foodListVM.setFoodImageLink3(R.mipmap.bamya);
+                    foodListVM.setFoodNetworkImageLink3(dataSnapshot.child("SoupImage3").getValue().toString());
                 }
-
                 foodList.add(foodListVM);
 
                 foodListVM = new FoodListVM();
@@ -184,21 +183,20 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
                 foodListVM.setFoodName1(dataSnapshot.child("Entree1").getValue().toString());
                 foodListVM.setFoodName2(dataSnapshot.child("Entree2").getValue().toString());
                 if (TextUtils.isEmpty(dataSnapshot.child("Entree1").getValue().toString())) {
-                    foodListVM.setFoodImageLink1(-1);
+                    foodListVM.setFoodNetworkImageLink1(null);
                 } else {
-                    foodListVM.setFoodImageLink1(R.mipmap.pilav2);
+                    foodListVM.setFoodNetworkImageLink1(dataSnapshot.child("EntreeImage1").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("Entree2").getValue().toString())) {
-                    foodListVM.setFoodImageLink2(-1);
+                    foodListVM.setFoodNetworkImageLink2(null);
                 } else {
-                    foodListVM.setFoodImageLink2(R.mipmap.soslumakarna);
+                    foodListVM.setFoodNetworkImageLink2(dataSnapshot.child("EntreeImage2").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("Entree3").getValue().toString())) {
-                    foodListVM.setFoodImageLink3(-1);
+                    foodListVM.setFoodNetworkImageLink3(null);
                 } else {
-                    //foodListVM.setFoodImageLink3(R.mipmap.bamya);
+                    foodListVM.setFoodNetworkImageLink3(dataSnapshot.child("EntreeImage3").getValue().toString());
                 }
-
                 foodList.add(foodListVM);
 
                 foodListVM = new FoodListVM();
@@ -207,23 +205,24 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
                 foodListVM.setFoodName2(dataSnapshot.child("MainFood2").getValue().toString());
                 foodListVM.setFoodName3(dataSnapshot.child("MainFood3").getValue().toString());
                 if (TextUtils.isEmpty(dataSnapshot.child("MainFood1").getValue().toString())) {
-                    foodListVM.setFoodImageLink1(-1);
+                    foodListVM.setFoodNetworkImageLink1(null);
                 } else {
-                    foodListVM.setFoodImageLink1(R.mipmap.soslukofte);
+                    foodListVM.setFoodNetworkImageLink1(dataSnapshot.child("MainFoodImage1").getValue().toString());
                 }
 
                 if (TextUtils.isEmpty(dataSnapshot.child("MainFood2").getValue().toString())) {
-                    foodListVM.setFoodImageLink2(-1);
+                    foodListVM.setFoodNetworkImageLink2(null);
                 } else {
-                    foodListVM.setFoodImageLink2(R.mipmap.fajita);
+                    foodListVM.setFoodNetworkImageLink2(dataSnapshot.child("MainFoodImage2").getValue().toString());
                 }
 
 
                 if (TextUtils.isEmpty(dataSnapshot.child("MainFood3").getValue().toString())) {
-                    foodListVM.setFoodImageLink3(-1);
+                    foodListVM.setFoodNetworkImageLink3(null);
                 } else {
-                    foodListVM.setFoodImageLink3(R.mipmap.bamya);
+                    foodListVM.setFoodNetworkImageLink3(dataSnapshot.child("MainFoodImage3").getValue().toString());
                 }
+
                 foodList.add(foodListVM);
 
                 foodListVM = new FoodListVM();
@@ -232,42 +231,41 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
                 foodListVM.setFoodName2(dataSnapshot.child("Alternatif2").getValue().toString());
                 foodListVM.setFoodName3(dataSnapshot.child("Alternatif3").getValue().toString());
                 if (TextUtils.isEmpty(dataSnapshot.child("Alternatif1").getValue().toString())) {
-                    foodListVM.setFoodImageLink1(-1);
+                    foodListVM.setFoodNetworkImageLink1(null);
                 } else {
-                    foodListVM.setFoodImageLink1(R.mipmap.kumru);
+                    foodListVM.setFoodNetworkImageLink1(dataSnapshot.child("AlternatifFoodImageLink1").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("Alternatif2").getValue().toString())) {
-                    foodListVM.setFoodImageLink2(-1);
+                    foodListVM.setFoodNetworkImageLink2(null);
                 } else {
-                    foodListVM.setFoodImageLink2(R.mipmap.ayran);
+                    foodListVM.setFoodNetworkImageLink2(dataSnapshot.child("AlternatifFoodImageLink2").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("Alternatif3").getValue().toString())) {
-                    foodListVM.setFoodImageLink3(-1);
+                    foodListVM.setFoodNetworkImageLink3(null);
                 } else {
-                    foodListVM.setFoodImageLink3(R.mipmap.specialsalata);
+                    foodListVM.setFoodNetworkImageLink3(dataSnapshot.child("AlternatifFoodImageLink3").getValue().toString());
                 }
+
                 foodList.add(foodListVM);
-
-
                 foodListVM = new FoodListVM();
                 foodListVM.setFoodType("ZY BÜFESİ");
                 foodListVM.setFoodName1(dataSnapshot.child("ZYBufe1").getValue().toString());
                 foodListVM.setFoodName2(dataSnapshot.child("ZYBufe2").getValue().toString());
                 foodListVM.setFoodName3(dataSnapshot.child("ZYBufe3").getValue().toString());
                 if (TextUtils.isEmpty(dataSnapshot.child("ZYBufe1").getValue().toString())) {
-                    foodListVM.setFoodImageLink1(-1);
+                    foodListVM.setFoodNetworkImageLink1(null);
                 } else {
-                    foodListVM.setFoodImageLink1(R.mipmap.kumru);
+                    foodListVM.setFoodNetworkImageLink1(dataSnapshot.child("ZYBufeImage1").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("ZYBufe2").getValue().toString())) {
-                    foodListVM.setFoodImageLink2(-1);
+                    foodListVM.setFoodNetworkImageLink2(null);
                 } else {
-                    foodListVM.setFoodImageLink2(R.mipmap.ayran);
+                    foodListVM.setFoodNetworkImageLink2(dataSnapshot.child("ZYBufeImage2").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("ZYBufe3").getValue().toString())) {
-                    foodListVM.setFoodImageLink3(-1);
+                    foodListVM.setFoodNetworkImageLink3(null);
                 } else {
-                    foodListVM.setFoodImageLink3(R.mipmap.specialsalata);
+                    foodListVM.setFoodNetworkImageLink3(dataSnapshot.child("ZYBufeImage3").getValue().toString());
                 }
                 foodList.add(foodListVM);
 
@@ -277,19 +275,19 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
                 foodListVM.setFoodName2(dataSnapshot.child("Desert2").getValue().toString());
                 foodListVM.setFoodName3(dataSnapshot.child("Desert3").getValue().toString());
                 if (TextUtils.isEmpty(dataSnapshot.child("Desert1").getValue().toString())) {
-                    foodListVM.setFoodImageLink1(-1);
+                    foodListVM.setFoodNetworkImageLink1(null);
                 } else {
-                    foodListVM.setFoodImageLink1(R.mipmap.kumru);
+                    foodListVM.setFoodNetworkImageLink1(dataSnapshot.child("DesertImage1").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("Desert2").getValue().toString())) {
-                    foodListVM.setFoodImageLink2(-1);
+                    foodListVM.setFoodNetworkImageLink2(null);
                 } else {
-                    foodListVM.setFoodImageLink2(R.mipmap.ayran);
+                    foodListVM.setFoodNetworkImageLink2(dataSnapshot.child("DesertImage2").getValue().toString());
                 }
                 if (TextUtils.isEmpty(dataSnapshot.child("Desert3").getValue().toString())) {
-                    foodListVM.setFoodImageLink3(-1);
+                    foodListVM.setFoodNetworkImageLink3(null);
                 } else {
-                    foodListVM.setFoodImageLink3(R.mipmap.specialsalata);
+                    foodListVM.setFoodNetworkImageLink3(dataSnapshot.child("DesertImage3").getValue().toString());
                 }
                 foodList.add(foodListVM);
 

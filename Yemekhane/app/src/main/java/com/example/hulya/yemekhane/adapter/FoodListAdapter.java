@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.toolbox.ImageLoader;
 import com.example.hulya.yemekhane.R;
+import com.example.hulya.yemekhane.controller.AppController;
 import com.example.hulya.yemekhane.viewmodel.FoodListVM;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by hulya on 14.08.2017.
@@ -16,7 +19,7 @@ import java.util.ArrayList;
 
 public class FoodListAdapter extends RecyclerView.Adapter<FoodListViewHolder> {
     private ArrayList<FoodListVM> foodList = new ArrayList<FoodListVM>();
-
+    private ImageLoader foodImageLoader = AppController.getInstance().getImageLoader();
     public FoodListAdapter(RecyclerView recyclerView, ArrayList<FoodListVM> foodList) {
     }
 
@@ -38,25 +41,25 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListViewHolder> {
         FoodListVM selectedFoodListVM = getItem(position);
         holder.foodType.setText(selectedFoodListVM.getFoodType());
         holder.txtFood1.setText(selectedFoodListVM.getFoodName1());
-        if (selectedFoodListVM.getFoodImageLink1() == -1) {
+        if (Objects.equals(selectedFoodListVM.getFoodNetworkImageLink1(), null)) {
             holder.cardView1.setVisibility(View.GONE);
         } else {
-            holder.cardView1.setBackgroundResource(selectedFoodListVM.getFoodImageLink1());
+            holder.networkImageView_food1.setImageUrl(selectedFoodListVM.getFoodNetworkImageLink1(), foodImageLoader);
         }
 
         holder.txtFood2.setText(selectedFoodListVM.getFoodName2());
-        if (selectedFoodListVM.getFoodImageLink2() == -1) {
+        if (Objects.equals(selectedFoodListVM.getFoodNetworkImageLink2(), null)) {
             holder.cardView2.setVisibility(View.GONE);
         } else {
-            holder.cardView2.setBackgroundResource(selectedFoodListVM.getFoodImageLink2());
+            holder.networkImageView_food2.setImageUrl(selectedFoodListVM.getFoodNetworkImageLink2(), foodImageLoader);
         }
 
         holder.txtFood3.setText(selectedFoodListVM.getFoodName3());
 
-        if (selectedFoodListVM.getFoodImageLink3() == -1) {
+        if (Objects.equals(selectedFoodListVM.getFoodNetworkImageLink3(), null)) {
             holder.cardView3.setVisibility(View.GONE);
         } else {
-            holder.cardView3.setBackgroundResource(selectedFoodListVM.getFoodImageLink3());
+            holder.networkImageView_food3.setImageUrl(selectedFoodListVM.getFoodNetworkImageLink3(), foodImageLoader);
         }
 
     }

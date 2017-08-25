@@ -12,9 +12,9 @@ public class FoodListVM implements Serializable {
     private String foodName1;
     private String foodName2;
     private String foodName3;
-    private int foodImageLink1;
-    private int foodImageLink2;
-    private int foodImageLink3;
+    private String foodNetworkImageLink1;
+    private String foodNetworkImageLink2;
+    private String foodNetworkImageLink3;
 
     public FoodListVM() {
 
@@ -51,27 +51,29 @@ public class FoodListVM implements Serializable {
         this.foodName3 = foodName3;
     }
 
-    public int getFoodImageLink1() {
-        return foodImageLink1;
+
+    public String getFoodNetworkImageLink1() {
+        return foodNetworkImageLink1;
     }
 
-    public void setFoodImageLink1(int foodImageLink1) {
-        this.foodImageLink1 = foodImageLink1;
+    public void setFoodNetworkImageLink1(String foodNetworkImageLink1) {
+        this.foodNetworkImageLink1 = foodNetworkImageLink1;
     }
 
-    public int getFoodImageLink2() {
-        return foodImageLink2;
+    public String getFoodNetworkImageLink2() {
+        return foodNetworkImageLink2;
     }
 
-    public void setFoodImageLink2(int foodImageLink2) {
-        this.foodImageLink2 = foodImageLink2;
+    public void setFoodNetworkImageLink2(String foodNetworkImageLink2) {
+        this.foodNetworkImageLink2 = foodNetworkImageLink2;
     }
 
-    public int getFoodImageLink3() {
-        return foodImageLink3;
+    public String getFoodNetworkImageLink3() {
+        return foodNetworkImageLink3;
     }
 
-    public void setFoodImageLink3(int foodImageLink3) {
-        this.foodImageLink3 = foodImageLink3;
+    public void setFoodNetworkImageLink3(String foodNetworkImageLink3) {
+        this.foodNetworkImageLink3 = foodNetworkImageLink3;
     }
 }
+
