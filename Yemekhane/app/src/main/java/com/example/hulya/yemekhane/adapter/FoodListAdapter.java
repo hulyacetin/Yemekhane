@@ -32,7 +32,6 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListViewHolder> {
         return new FoodListViewHolder(view);
     }
 
-
     @Override
     public void onBindViewHolder(FoodListViewHolder holder, int position) {
         FoodListVM selectedFoodListVM = getItem(position);
