@@ -35,7 +35,7 @@ import static com.felipecsl.gifimageview.library.GifHeaderParser.TAG;
 public class SplashScreenActivity extends Activity {
 
     //variable defines
-    Map<String, ArrayList<FoodListVM>> mapFoodList = new HashMap<>();
+    private Map<String, ArrayList<FoodListVM>> mapFoodList = new HashMap<>();
     private ArrayList<FoodListVM> foodList = new ArrayList<>();
     private String child = "Day1";
     private int dayCount = 1;
@@ -179,6 +179,10 @@ public class SplashScreenActivity extends Activity {
                 } else {
                     foodListVM.setFoodNetworkImageLink3(dataSnapshot.child("AlternatifFoodImageLink3").getValue().toString());
                 }
+                if ((TextUtils.isEmpty(dataSnapshot.child("Alternatif1").getValue().toString())) && (TextUtils.isEmpty(dataSnapshot.child("Alternatif2").getValue().toString())) && (TextUtils.isEmpty(dataSnapshot.child("Alternatif3").getValue().toString()))) {
+                    foodListVM.setFoodType(null);
+                }
+
 
                 foodList.add(foodListVM);
                 foodListVM = new FoodListVM();
@@ -286,4 +290,3 @@ public class SplashScreenActivity extends Activity {
 
     }
 }
-

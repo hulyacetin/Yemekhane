@@ -1,6 +1,7 @@
 package com.example.hulya.yemekhane.ui;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -128,7 +132,7 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
 
         Date date1 = new Date();
         DateFormat format1 = new SimpleDateFormat("dd.MM.yyyy");
-        default_date = format1.format(date1).toString();
+        default_date = format1.format(date1);
         spinner_position = spAdapter.getPosition(default_date);
         spinner.setSelection(spinner_position);
     }
@@ -136,8 +140,33 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
     private void dateInformation() {
         Date date = new Date();
         DateFormat dateformat = new SimpleDateFormat("EEEE-dd/MM/yyyy");
-        txtdateInformation.setText(dateformat.format(date).toString());
+        txtdateInformation.setText(dateformat.format(date));
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.activity_action_about_us, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_about_us:
+                openAbout();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void openAbout() {
+        Intent intent_about_us_activity = new Intent(RecyclerViewActivity.this, AboutUsActivity.class);
+        startActivity(intent_about_us_activity);
     }
 
     @Override
@@ -230,6 +259,7 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
                 foodListVM.setFoodName1(dataSnapshot.child("Alternatif1").getValue().toString());
                 foodListVM.setFoodName2(dataSnapshot.child("Alternatif2").getValue().toString());
                 foodListVM.setFoodName3(dataSnapshot.child("Alternatif3").getValue().toString());
+
                 if (TextUtils.isEmpty(dataSnapshot.child("Alternatif1").getValue().toString())) {
                     foodListVM.setFoodNetworkImageLink1(null);
                 } else {
@@ -244,6 +274,9 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
                     foodListVM.setFoodNetworkImageLink3(null);
                 } else {
                     foodListVM.setFoodNetworkImageLink3(dataSnapshot.child("AlternatifFoodImageLink3").getValue().toString());
+                }
+                if ((TextUtils.isEmpty(dataSnapshot.child("Alternatif1").getValue().toString())) && (TextUtils.isEmpty(dataSnapshot.child("Alternatif2").getValue().toString())) && (TextUtils.isEmpty(dataSnapshot.child("Alternatif3").getValue().toString()))) {
+                    foodListVM.setFoodType(null);
                 }
 
                 foodList.add(foodListVM);
@@ -292,7 +325,6 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
                 foodList.add(foodListVM);
 
                 mapFoodList.put(child, foodList);
-//                child = "Day" + (selectedItemPosition + 1);
 
                 dayCount++;
 
@@ -306,7 +338,6 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
                 }
 
             }
-
             @Override
             public void onCancelled(FirebaseError firebaseError) {
 
@@ -314,9 +345,3 @@ public class RecyclerViewActivity extends AppCompatActivity implements SwipeRefr
         });
     }
 }
-
-
-
-
-
-

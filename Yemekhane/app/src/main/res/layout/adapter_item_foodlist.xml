@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textColor="@color/colorbaslik"
-        android:textSize="40dp"
+        android:textSize="40sp"
         android:textStyle="bold" />
 
 
@@ -25,7 +25,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/placeholder_rev">
+            android:background="@drawable/placeholder_rev">
 
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/network_image_food1"
@@ -37,14 +37,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/network_image_food1"
-                android:layout_alignLeft="@+id/network_image_food1"
-                android:layout_alignRight="@+id/network_image_food1"
+                android:layout_alignEnd="@+id/network_image_food1"
+                android:layout_alignStart="@+id/network_image_food1"
                 android:layout_alignTop="@+id/network_image_food1"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/bg_transparent"
                 android:gravity="center"
                 android:textColor="@color/colortext"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </RelativeLayout>
 
@@ -61,7 +61,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/placeholder_rev">
+            android:background="@drawable/placeholder_rev">
 
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/network_image_food2"
@@ -73,14 +73,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/network_image_food2"
-                android:layout_alignLeft="@+id/network_image_food2"
-                android:layout_alignRight="@+id/network_image_food2"
+                android:layout_alignEnd="@+id/network_image_food2"
+                android:layout_alignStart="@+id/network_image_food2"
                 android:layout_alignTop="@+id/network_image_food2"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/bg_transparent"
                 android:gravity="center"
                 android:textColor="@color/colortext"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
@@ -96,7 +96,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/placeholder_rev">
+            android:background="@drawable/placeholder_rev">
 
             <com.android.volley.toolbox.NetworkImageView
                 android:id="@+id/network_image_food3"
@@ -108,14 +108,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/network_image_food3"
-                android:layout_alignLeft="@+id/network_image_food3"
-                android:layout_alignRight="@+id/network_image_food3"
+                android:layout_alignEnd="@+id/network_image_food3"
+                android:layout_alignStart="@+id/network_image_food3"
                 android:layout_alignTop="@+id/network_image_food3"
                 android:layout_gravity="center_vertical"
                 android:background="@drawable/bg_transparent"
                 android:gravity="center"
                 android:textColor="@color/colortext"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>

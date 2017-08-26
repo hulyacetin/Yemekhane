@@ -61,6 +61,9 @@ public class FoodListAdapter extends RecyclerView.Adapter<FoodListViewHolder> {
         } else {
             holder.networkImageView_food3.setImageUrl(selectedFoodListVM.getFoodNetworkImageLink3(), foodImageLoader);
         }
+        if (selectedFoodListVM.getFoodType() == null) {
+            holder.foodType.setVisibility(View.GONE);
+        }
 
     }
 

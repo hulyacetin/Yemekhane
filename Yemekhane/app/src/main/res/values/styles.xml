@@ -15,6 +15,10 @@
         <item name="android:textColor">#000</item>
     </style>
 
+    <style name="splash_screen_style">
+        <item name="android:background">@color/splash_screen</item>
+    </style>
+
 </resources>
 
 
